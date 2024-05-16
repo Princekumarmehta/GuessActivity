@@ -3,10 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guess activity</title>
+    <title>Guess the Activity</title>
+    <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
-    <!-- <img src="" alt=""> -->
-    <h1>ACtivity Guessing game</h1>
+    <div class="container">
+        <h1>Guess the Activity</h1>
+        <div class="gif-container">
+            <img src="<%= gif %>" alt="GIF">
+        </div>
+        <div class="options">
+            <% options.forEach(option => { %>
+                <button class="option-button"><%= option %></button>
+            <% }); %>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.option-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const selectedOption = button.textContent;
+                fetch('/check-answer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ selectedOption, correctOption: '<%= correctOption %>' })
+                }).then(response => {
+                    if (response.status === 200) {
+                        location.reload(); // Correct answer, reload the page for the next question
+                    } else {
+                        window.location.href = '/gameover'; // Incorrect answer, go to the game over page
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
