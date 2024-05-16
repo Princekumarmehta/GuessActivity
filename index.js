@@ -31,11 +31,11 @@ app.get('/', async (req, res) => {
     try {
         const options = getRandomOptions(activities, 4);
         let correctOption = options[Math.floor(Math.random() * options.length)];
-        correctOption='"'+correctOption+'"'
+       let  correctOption1='"'+correctOption+'"'
          console.log(correctOption)
          console.log(options)
         //  console.log(first)
-        const response = await axios.get(`https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${correctOption}&limit=1`);
+        const response = await axios.get(`https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${correctOption1}&limit=1`);
         if (!response.ok) throw new Error(`Error: ${response.statusText}`);
         
         const data = await response.json();
